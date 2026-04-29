@@ -8,6 +8,7 @@ When the task begins from description instead of from an existing diagram:
 - read the structured brief
 - derive similar-image search queries
 - run `web.image_query` before locking the first layout
+- generate a first draft `.drawio` from the brief when useful
 
 Only after preflight should the diagram move into structural planning.
 
@@ -35,6 +36,8 @@ Freeze the main node order before routing arrows.
 ## 3. Build the draw.io version first
 
 Use `mcp__drawio__` as the primary authoring tool.
+
+If the task starts from description, you may begin from a generated draft `.drawio` created by `scripts/generate_drawio_draft.py`, then refine it in draw.io MCP.
 
 Typical sequence:
 

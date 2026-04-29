@@ -36,6 +36,7 @@ drawio-visio-workflow/
 │  └─ style-guidelines.md
 └─ scripts/
    ├─ optimize_diagram_prompt.py
+   ├─ generate_drawio_draft.py
    ├─ extract_drawio_cells.py
    └─ visio_helpers.ps1
 ```
@@ -70,6 +71,7 @@ Defines the preflight process that:
 - tightens user input into a diagram brief
 - generates search queries
 - retrieves similar reference diagrams before layout
+- generates a first draft `.drawio` when needed
 
 ### `references/mcp-tools.md`
 
@@ -118,6 +120,16 @@ Example:
 
 ```bash
 python scripts/optimize_diagram_prompt.py "multi-stage 2D 3D registration pipeline for thesis figure"
+```
+
+### `scripts/generate_drawio_draft.py`
+
+Creates a first-pass `.drawio` XML draft from the structured brief generated in preflight.
+
+Example:
+
+```bash
+python scripts/generate_drawio_draft.py brief.json draft.drawio
 ```
 
 ### `scripts/visio_helpers.ps1`

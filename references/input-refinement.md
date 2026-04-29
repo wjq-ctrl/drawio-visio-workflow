@@ -65,3 +65,13 @@ After reference search, decide:
 - what arrow style should be consistent across the figure
 
 Only after these decisions should you begin draw.io authoring.
+
+## Step 5. Generate a draft draw.io file
+
+After the brief is stable, generate a first draft `.drawio`:
+
+```bash
+python scripts/generate_drawio_draft.py brief.json output.drawio
+```
+
+This draft is not the final figure. It is the first structured layout pass that can then be refined with draw.io MCP.
