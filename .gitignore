@@ -2,3 +2,6 @@ __pycache__/
 *.pyc
 Thumbs.db
 *.vsdx
+preflight_output/
+pipeline_output/
+pipeline_test/
