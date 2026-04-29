@@ -9,6 +9,7 @@ When the task begins from description instead of from an existing diagram:
 - derive similar-image search queries
 - run `web.image_query` before locking the first layout
 - generate a first draft `.drawio` from the brief when useful
+- generate a first-pass Visio script from the same brief when useful
 
 Only after preflight should the diagram move into structural planning.
 
@@ -102,6 +103,7 @@ Choose the Visio path:
 
 - use `mcp__visio__` for simple diagrams with basic rectangles and connectors
 - use PowerShell plus Visio COM for more controlled reconstruction
+- use `scripts/generate_visio_script_from_brief.py` when you want a brief-driven first-pass reconstruction script
 
 When using PowerShell:
 

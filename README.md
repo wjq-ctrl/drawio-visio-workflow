@@ -37,6 +37,7 @@ drawio-visio-workflow/
 └─ scripts/
    ├─ optimize_diagram_prompt.py
    ├─ generate_drawio_draft.py
+   ├─ generate_visio_script_from_brief.py
    ├─ extract_drawio_cells.py
    └─ visio_helpers.ps1
 ```
@@ -130,6 +131,16 @@ Example:
 
 ```bash
 python scripts/generate_drawio_draft.py brief.json draft.drawio
+```
+
+### `scripts/generate_visio_script_from_brief.py`
+
+Creates a first-pass PowerShell Visio reconstruction script from the same structured brief.
+
+Example:
+
+```bash
+python scripts/generate_visio_script_from_brief.py brief.json create_from_brief.ps1
 ```
 
 ### `scripts/visio_helpers.ps1`

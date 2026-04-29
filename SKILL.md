@@ -32,9 +32,10 @@ and the output needs to include both:
    - identify the intended visual style
 4. Create or edit the diagram in draw.io first.
 5. Export or save the `.drawio` file.
-6. Rebuild the same structure in Visio.
-7. Save the `.vsdx` next to the `.drawio` unless the user asks for another path.
-8. Verify both output files and report the generated paths.
+6. Generate a Visio reconstruction script from the brief when helpful.
+7. Rebuild the same structure in Visio.
+8. Save the `.vsdx` next to the `.drawio` unless the user asks for another path.
+9. Verify both output files and report the generated paths.
 
 ## Required Tooling
 
@@ -43,6 +44,7 @@ Prefer this tool order:
 1. input refinement plus image search
    - `scripts/optimize_diagram_prompt.py`
    - `scripts/generate_drawio_draft.py`
+   - `scripts/generate_visio_script_from_brief.py`
    - `web.image_query` for similar diagram references
 2. `mcp__drawio__`
    - `start_session`
@@ -67,6 +69,7 @@ Use web image retrieval before the first real layout pass when the input begins 
   - style target
 - Then derive 3 to 6 image-search queries for similar figures.
 - Then generate a first-pass `.drawio` draft when the input is still only descriptive.
+- Then generate a first-pass Visio PowerShell script when the diagram is regular enough to automate.
 - Review similar diagrams to decide:
   - left-to-right vs top-to-bottom flow
   - density level
@@ -97,6 +100,7 @@ Use draw.io as the primary authoring surface. Use Visio as the delivery reconstr
 - Read [references/mcp-tools.md](references/mcp-tools.md) for the exact MCP responsibilities and tool ordering.
 - Use [scripts/optimize_diagram_prompt.py](scripts/optimize_diagram_prompt.py) to turn rough input into a structured brief and search-query set.
 - Use [scripts/generate_drawio_draft.py](scripts/generate_drawio_draft.py) to create a first draft `.drawio` from the structured brief.
+- Use [scripts/generate_visio_script_from_brief.py](scripts/generate_visio_script_from_brief.py) to create a first-pass Visio reconstruction script from the same brief.
 - Use [scripts/extract_drawio_cells.py](scripts/extract_drawio_cells.py) to inspect the `.drawio` structure.
 - Reuse [scripts/visio_helpers.ps1](scripts/visio_helpers.ps1) when creating a Visio reconstruction script.
 

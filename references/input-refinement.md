@@ -75,3 +75,20 @@ python scripts/generate_drawio_draft.py brief.json output.drawio
 ```
 
 This draft is not the final figure. It is the first structured layout pass that can then be refined with draw.io MCP.
+
+## Step 6. Generate a first-pass Visio script
+
+When the brief is regular enough for direct automation, generate a PowerShell reconstruction script:
+
+```bash
+python scripts/generate_visio_script_from_brief.py brief.json create_from_brief.ps1
+```
+
+This creates a first-pass Visio script that:
+
+- references `scripts/visio_helpers.ps1`
+- lays out nodes in a consistent left-to-right row
+- draws standardized data-flow arrows
+- saves a `.vsdx`
+
+Use it as a scaffold, not as the final guarantee of quality.
