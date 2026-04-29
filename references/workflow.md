@@ -1,6 +1,17 @@
 # Workflow
 
-## 1. Normalize the input
+## 1. Preflight the input
+
+When the task begins from description instead of from an existing diagram:
+
+- run `python scripts/optimize_diagram_prompt.py "<raw input>"`
+- read the structured brief
+- derive similar-image search queries
+- run `web.image_query` before locking the first layout
+
+Only after preflight should the diagram move into structural planning.
+
+## 2. Normalize the input
 
 Possible inputs:
 
@@ -21,7 +32,7 @@ Before drawing anything, convert the input into:
 If the input is descriptive rather than structural, write a short diagram plan first.
 Freeze the main node order before routing arrows.
 
-## 2. Build the draw.io version first
+## 3. Build the draw.io version first
 
 Use `mcp__drawio__` as the primary authoring tool.
 
@@ -46,7 +57,7 @@ Reasoning:
 - it is easier to inspect and revise structure there
 - the exported `.drawio` becomes the editable intermediate source of truth
 
-## 3. Inspect the source when `.drawio` already exists
+## 4. Inspect the source when `.drawio` already exists
 
 - Read the `.drawio` file as UTF-8.
 - If labels look garbled in PowerShell, force UTF-8 output or use Python for extraction.
@@ -64,7 +75,7 @@ This produces a JSON summary of:
 - geometry
 - style strings
 
-## 4. Decide the reconstruction level
+## 5. Decide the reconstruction level
 
 Choose one of three modes:
 
@@ -82,7 +93,7 @@ Apply Huashu-Design discipline here:
 - make the reading path obvious on first glance
 - make data-flow arrows read as a system rather than as individually improvised lines
 
-## 5. Build the Visio version
+## 6. Build the Visio version
 
 Choose the Visio path:
 
@@ -102,7 +113,7 @@ When using PowerShell:
 Keep the drawing script explicit. Do not attempt a fragile one-shot full auto-layout unless the source is highly regular.
 Treat arrow routing as a first-class quality check, not as a final cosmetic pass.
 
-## 6. Generate the Visio file
+## 7. Generate the Visio file
 
 Typical pattern:
 
@@ -112,7 +123,7 @@ powershell -ExecutionPolicy Bypass -File .\tools\create_visio_from_drawio_xxx.ps
 
 If PowerShell parsing breaks on Chinese text, rewrite the script as UTF-8 BOM before execution.
 
-## 7. Verify the result
+## 8. Verify the result
 
 Check:
 
@@ -133,7 +144,7 @@ Get-Item -LiteralPath '.\figures\example.vsdx' | Select-Object FullName, Length,
 
 And for draw.io output, verify the exported `.drawio` path as well.
 
-## 8. Report clearly
+## 9. Report clearly
 
 Always report:
 

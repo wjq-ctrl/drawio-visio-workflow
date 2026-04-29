@@ -7,6 +7,10 @@ This skill depends on two MCP tool surfaces:
 - `mcp__drawio__` for authoring and exporting `.drawio`
 - `mcp__visio__` for basic `.vsdx` reconstruction
 
+It also depends on one search surface before authoring when input is descriptive:
+
+- `web.image_query` for retrieving similar diagram references
+
 Use PowerShell plus Visio COM as the controlled fallback when the Visio MCP surface is not expressive enough.
 
 ## Draw.io MCP
@@ -28,6 +32,21 @@ Use draw.io MCP for:
 - refining grouping and layout
 - refining connector routing and arrow consistency
 - exporting the final `.drawio`
+
+## Image Search
+
+Use `web.image_query` after prompt refinement and before the first layout pass when the source is:
+
+- text description
+- framework description
+- image description
+
+Use reference retrieval to calibrate:
+
+- diagram orientation
+- grouping density
+- connector style
+- whitespace and stage treatment
 
 ## Visio MCP
 

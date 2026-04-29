@@ -19,29 +19,57 @@ and the output needs to include both:
 
 ## Workflow
 
-1. Normalize the input into a diagram plan:
+1. Run a preflight pass on the input:
+   - optimize the raw input into a diagram brief
+   - extract likely nodes, stages, and edge verbs
+   - generate search queries for similar diagrams
+   - retrieve similar reference images before drawing
+2. Normalize the input into a diagram plan:
    - identify nodes
    - identify groups or stages
    - identify directed edges
    - identify the intended visual style
-2. Create or edit the diagram in draw.io first.
-3. Export or save the `.drawio` file.
-4. Rebuild the same structure in Visio.
-5. Save the `.vsdx` next to the `.drawio` unless the user asks for another path.
-6. Verify both output files and report the generated paths.
+3. Create or edit the diagram in draw.io first.
+4. Export or save the `.drawio` file.
+5. Rebuild the same structure in Visio.
+6. Save the `.vsdx` next to the `.drawio` unless the user asks for another path.
+7. Verify both output files and report the generated paths.
 
 ## Required Tooling
 
 Prefer this tool order:
 
-1. `mcp__drawio__`
+1. input refinement plus image search
+   - `scripts/optimize_diagram_prompt.py`
+   - `web.image_query` for similar diagram references
+2. `mcp__drawio__`
    - `start_session`
    - `create_new_diagram`
    - `get_diagram`
    - `edit_diagram`
    - `export_diagram`
-2. `mcp__visio__` when the diagram is simple enough for shape-by-shape reconstruction
-3. PowerShell + Visio COM when the Visio tool surface is too limited for the target diagram
+3. `mcp__visio__` when the diagram is simple enough for shape-by-shape reconstruction
+4. PowerShell + Visio COM when the Visio tool surface is too limited for the target diagram
+
+Use web image retrieval before the first real layout pass when the input begins as description rather than as an existing diagram.
+
+## Preflight Rules
+
+- Do not draw from a vague user description directly.
+- First convert the input into a tighter diagram prompt with:
+  - diagram type
+  - target audience
+  - node list
+  - edge list
+  - stage grouping
+  - style target
+- Then derive 3 to 6 image-search queries for similar figures.
+- Review similar diagrams to decide:
+  - left-to-right vs top-to-bottom flow
+  - density level
+  - grouping strategy
+  - connector style
+- Let Huashu-Design judgment shape the visual direction after reference search, not before it.
 
 Use draw.io as the primary authoring surface. Use Visio as the delivery reconstruction surface.
 
@@ -61,14 +89,17 @@ Use draw.io as the primary authoring surface. Use Visio as the delivery reconstr
 ## Files To Read
 
 - Read [references/workflow.md](references/workflow.md) for the end-to-end procedure and decision points.
+- Read [references/input-refinement.md](references/input-refinement.md) before starting from a text or image description.
 - Read [references/style-guidelines.md](references/style-guidelines.md) when the user asks for academic, presentation, or neutral visual treatment.
 - Read [references/mcp-tools.md](references/mcp-tools.md) for the exact MCP responsibilities and tool ordering.
+- Use [scripts/optimize_diagram_prompt.py](scripts/optimize_diagram_prompt.py) to turn rough input into a structured brief and search-query set.
 - Use [scripts/extract_drawio_cells.py](scripts/extract_drawio_cells.py) to inspect the `.drawio` structure.
 - Reuse [scripts/visio_helpers.ps1](scripts/visio_helpers.ps1) when creating a Visio reconstruction script.
 
 ## Typical Requests
 
 - "Create a flowchart from this process description and export both draw.io and Visio."
+- "Take this rough process description, optimize it into a clearer diagram brief, find similar reference images, then create draw.io and Visio outputs."
 - "Turn this framework description into a thesis-style diagram."
 - "Use this image description to draw a structured pipeline figure."
 - "Convert this draw.io diagram to Visio."
