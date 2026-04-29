@@ -40,7 +40,7 @@ def build_script(brief, output_path: str):
     lines.append(")")
     lines.append("")
     lines.append("$ErrorActionPreference = 'Stop'")
-    lines.append("$HelperPath = Join-Path $PSScriptRoot '..\\drawio-visio-workflow\\scripts\\visio_helpers.ps1'")
+    lines.append("$HelperPath = Join-Path $PSScriptRoot '..\\scripts\\visio_helpers.ps1'")
     lines.append("if (!(Test-Path -LiteralPath $HelperPath)) {")
     lines.append("    throw \"visio_helpers.ps1 not found relative to generated script.\"")
     lines.append("}")
@@ -100,6 +100,9 @@ def build_script(brief, output_path: str):
 
 
 def main():
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+
     if len(sys.argv) != 3:
         print("Usage: python generate_visio_script_from_brief.py <brief.json> <output.ps1>", file=sys.stderr)
         sys.exit(1)

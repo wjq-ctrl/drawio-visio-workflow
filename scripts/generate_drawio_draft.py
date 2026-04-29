@@ -127,6 +127,9 @@ def build_drawio(brief):
 
 
 def main():
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+
     if len(sys.argv) != 3:
         print("Usage: python generate_drawio_draft.py <brief.json> <output.drawio>", file=sys.stderr)
         sys.exit(1)

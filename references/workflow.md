@@ -4,6 +4,7 @@
 
 When the task begins from description instead of from an existing diagram:
 
+- optionally run `python scripts/run_diagram_pipeline.py "<raw input>" --outdir pipeline_output --basename diagram`
 - optionally run `python scripts/run_diagram_preflight.py "<raw input>" --outdir preflight_output --basename diagram`
 - run `python scripts/optimize_diagram_prompt.py "<raw input>"`
 - read the structured brief
@@ -128,6 +129,8 @@ powershell -ExecutionPolicy Bypass -File .\tools\create_visio_from_drawio_xxx.ps
 ```
 
 If PowerShell parsing breaks on Chinese text, rewrite the script as UTF-8 BOM before execution.
+
+For a local one-command path, `scripts/run_diagram_pipeline.py` can execute the generated PowerShell script and produce the `.vsdx` directly.
 
 ## 8. Verify the result
 

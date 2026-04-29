@@ -1,4 +1,5 @@
 import argparse
+import os
 import json
 import subprocess
 import sys
@@ -6,7 +7,10 @@ from pathlib import Path
 
 
 def run_command(args):
-    result = subprocess.run(args, capture_output=True)
+    env = os.environ.copy()
+    env["PYTHONUTF8"] = "1"
+    env["PYTHONIOENCODING"] = "utf-8"
+    result = subprocess.run(args, capture_output=True, env=env)
     stdout = result.stdout.decode("utf-8", errors="replace").strip()
     stderr = result.stderr.decode("utf-8", errors="replace").strip()
     if result.returncode != 0:
@@ -19,6 +23,9 @@ def write_json(path: Path, data):
 
 
 def main():
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8")
+
     parser = argparse.ArgumentParser(
         description="Run the local preflight pipeline from raw description to brief, draft drawio, and Visio script."
     )

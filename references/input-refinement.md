@@ -26,6 +26,12 @@ This writes:
 - `diagram_draft.drawio`
 - `diagram_create_visio.ps1`
 
+If you want the local pipeline to also execute the generated Visio script and produce the final `.vsdx`, run:
+
+```bash
+python scripts/run_diagram_pipeline.py "your raw diagram description" --outdir pipeline_output --basename diagram
+```
+
 ## Step 1. Tighten the prompt
 
 Rewrite the raw input into a structured brief with:

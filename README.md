@@ -35,6 +35,7 @@ drawio-visio-workflow/
 │  ├─ workflow.md
 │  └─ style-guidelines.md
 └─ scripts/
+   ├─ run_diagram_pipeline.py
    ├─ run_diagram_preflight.py
    ├─ optimize_diagram_prompt.py
    ├─ generate_drawio_draft.py
@@ -136,6 +137,21 @@ Example:
 
 ```bash
 python scripts/run_diagram_preflight.py "multi-stage 2D 3D registration pipeline for thesis figure" --outdir preflight_output --basename registration
+```
+
+### `scripts/run_diagram_pipeline.py`
+
+Runs the local pipeline end to end and writes:
+
+- `*_brief.json`
+- `*_draft.drawio`
+- `*_create_visio.ps1`
+- `*_create_visio.vsdx`
+
+Example:
+
+```bash
+python scripts/run_diagram_pipeline.py "multi-stage 2D 3D registration pipeline for thesis figure" --outdir pipeline_output --basename registration
 ```
 
 ### `scripts/generate_drawio_draft.py`
