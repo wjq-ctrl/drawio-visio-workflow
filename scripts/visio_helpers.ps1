@@ -69,7 +69,10 @@ function Add-Arrow {
         [double]$X1, [double]$Y1, [double]$X2, [double]$Y2,
         [double]$Scale, [double]$XOffset, [double]$PageHeight, [double]$TopMargin,
         [string]$LineRgb = "107,114,128",
-        [string]$LineWeight = "1.1 pt"
+        [string]$LineWeight = "1.1 pt",
+        [string]$EndArrow = "13",
+        [string]$BeginArrow = "0",
+        [string]$LinePattern = "1"
     )
 
     $shape = $Page.DrawLine(
@@ -80,6 +83,20 @@ function Add-Arrow {
     )
     Set-CellFormula $shape "LineColor" "RGB($LineRgb)"
     Set-CellFormula $shape "LineWeight" $LineWeight
-    Set-CellFormula $shape "EndArrow" "13"
+    Set-CellFormula $shape "LinePattern" $LinePattern
+    Set-CellFormula $shape "BeginArrow" $BeginArrow
+    Set-CellFormula $shape "EndArrow" $EndArrow
     return $shape
+}
+
+function Add-DashedArrow {
+    param(
+        $Page,
+        [double]$X1, [double]$Y1, [double]$X2, [double]$Y2,
+        [double]$Scale, [double]$XOffset, [double]$PageHeight, [double]$TopMargin,
+        [string]$LineRgb = "107,114,128",
+        [string]$LineWeight = "1.1 pt"
+    )
+
+    return Add-Arrow -Page $Page -X1 $X1 -Y1 $Y1 -X2 $X2 -Y2 $Y2 -Scale $Scale -XOffset $XOffset -PageHeight $PageHeight -TopMargin $TopMargin -LineRgb $LineRgb -LineWeight $LineWeight -LinePattern "2"
 }
