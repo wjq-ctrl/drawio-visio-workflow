@@ -116,6 +116,8 @@ Turns rough user input into a structured brief with:
 - diagram type
 - style guess
 - node candidates
+- stage grouping
+- explicit edge list
 - edge-verb hints
 - recommended image-search queries
 

@@ -8,6 +8,8 @@ Turn rough input into:
 
 - a cleaner diagram brief
 - a first-pass node and edge structure
+- explicit `stages` grouping when possible
+- explicit `edges` list when possible
 - search queries for similar reference diagrams
 - a draft `.drawio`
 - a first-pass Visio reconstruction script

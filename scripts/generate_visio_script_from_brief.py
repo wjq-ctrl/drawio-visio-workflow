@@ -31,6 +31,8 @@ def pick_colors(style_name: str):
 
 def build_script(brief, output_path: str):
     node_candidates = brief.get("node_candidates") or ["Start", "Process", "Output"]
+    stages = brief.get("stages") or []
+    edges = brief.get("edges") or []
     style_name = brief.get("preferred_style", "optimized")
     fill_rgb, line_rgb = pick_colors(style_name)
 
@@ -60,30 +62,54 @@ def build_script(brief, output_path: str):
     lines.append("Set-CellFormula $page.PageSheet 'PageHeight' '8.5 in'")
     lines.append("")
 
-    x = 80
-    y = 220
+    x = 100
+    y = 240
     width = 150
     height = 60
     gap = 70
-    centers = []
+
+    if stages:
+        stage_x = 60
+        stage_y = 180
+        stage_width = 210
+        stage_height = 140
+        for idx, stage in enumerate(stages, start=1):
+            lines.append(
+                f"$stage{idx} = Add-Rect -Page $page -X {stage_x} -Y {stage_y} -Width {stage_width} -Height {stage_height} "
+                f"-Scale $Scale -XOffset $XOffset -PageHeight $PageHeight -TopMargin $TopMargin "
+                f"-Text '{ps_string(stage.get('name', f'Stage {idx}'))}' -FillRgb '251,252,253' -LineRgb '199,205,216' "
+                f"-LineWeight '1 pt' -FontSize '9 pt'"
+            )
+            stage_x += stage_width + 30
+
+    node_positions = {}
 
     for idx, label in enumerate(node_candidates):
         var_name = f"$node{idx + 1}"
-        centers.append((x + width, y + height / 2))
+        node_positions[label] = (x, y)
         lines.append(
             f"{var_name} = Add-Rect -Page $page -X {x} -Y {y} -Width {width} -Height {height} "
             f"-Scale $Scale -XOffset $XOffset -PageHeight $PageHeight -TopMargin $TopMargin "
             f"-Text '{ps_string(label)}' -FillRgb '{fill_rgb}' -LineRgb '{line_rgb}' "
             f"-LineWeight '1.1 pt' -FontSize '9 pt'"
         )
-        x += width + gap
+        x += 240 if stages else width + gap
 
     lines.append("")
 
-    for idx in range(len(node_candidates) - 1):
-        x1 = 80 + idx * (width + gap) + width
-        x2 = 80 + (idx + 1) * (width + gap)
-        y_mid = y + height / 2
+    if not edges:
+        edges = [{"source": left, "target": right, "type": "data_flow"} for left, right in zip(node_candidates, node_candidates[1:])]
+
+    for edge in edges:
+        source = edge.get("source")
+        target = edge.get("target")
+        if source not in node_positions or target not in node_positions:
+            continue
+        sx, sy = node_positions[source]
+        tx, ty = node_positions[target]
+        x1 = sx + width
+        x2 = tx
+        y_mid = sy + height / 2
         lines.append(
             f"$null = Add-Arrow -Page $page -X1 {x1} -Y1 {y_mid} -X2 {x2} -Y2 {y_mid} "
             f"-Scale $Scale -XOffset $XOffset -PageHeight $PageHeight -TopMargin $TopMargin "

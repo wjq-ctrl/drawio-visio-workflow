@@ -8,6 +8,8 @@ EDGE_HINTS = [
     "predict", "compute", "render", "compare", "fuse", "align", "register",
 ]
 
+STAGE_PATTERN = re.compile(r"\bstage\s*\d+\b|阶段\s*\d+", re.IGNORECASE)
+
 
 def normalize_text(text: str) -> str:
     text = text.replace("→", " -> ").replace("=>", " -> ").replace("：", ": ")
@@ -42,6 +44,25 @@ def infer_search_queries(text: str, nodes):
         f"{base} academic figure",
         f"{base} process diagram",
     ]
+
+
+def infer_edges(nodes):
+    edges = []
+    for left, right in zip(nodes, nodes[1:]):
+        edges.append({"source": left, "target": right, "type": "data_flow"})
+    return edges
+
+
+def infer_stages(nodes):
+    stages = []
+    for idx, node in enumerate(nodes, start=1):
+        match = STAGE_PATTERN.search(node)
+        if match:
+            stage_name = match.group(0)
+        else:
+            stage_name = f"Stage {idx}"
+        stages.append({"name": stage_name, "nodes": [node]})
+    return stages
 
 
 def infer_style(text: str):
@@ -82,6 +103,8 @@ def main():
         "preferred_style": infer_style(raw),
         "audience_guess": "academic" if infer_style(raw) == "academic" else "general technical",
         "node_candidates": nodes,
+        "stages": infer_stages(nodes),
+        "edges": infer_edges(nodes),
         "edge_verbs_detected": [w for w in EDGE_HINTS if w in normalized.lower()],
         "recommended_search_queries": infer_search_queries(normalized, nodes),
         "output_contract": [".drawio", ".vsdx"],

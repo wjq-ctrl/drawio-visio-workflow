@@ -16,6 +16,10 @@ EDGE_STYLE = (
     "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;"
     "html=1;strokeWidth=1.6;strokeColor=#6B7280;endArrow=block;endFill=1;"
 )
+STAGE_STYLE = (
+    "rounded=0;whiteSpace=wrap;html=1;fillColor=#FBFCFD;"
+    "strokeColor=#C7CDD8;strokeWidth=1;"
+)
 
 
 def load_brief(path: Path):
@@ -53,6 +57,8 @@ def create_cell(root, cell_id, value="", style="", vertex=None, edge=None, paren
 
 def build_drawio(brief):
     node_candidates = brief.get("node_candidates") or ["Start", "Process", "Output"]
+    edges = brief.get("edges") or []
+    stages = brief.get("stages") or []
     style_name = brief.get("preferred_style", "optimized")
     node_style = pick_node_style(style_name)
 
@@ -83,34 +89,84 @@ def build_drawio(brief):
     ET.SubElement(root, "mxCell", {"id": "0"})
     ET.SubElement(root, "mxCell", {"id": "1", "parent": "0"})
 
-    x = 80
-    y = 220
+    x = 100
+    y = 240
     width = 150
     height = 60
     gap = 70
 
-    node_ids = []
-    for idx, label in enumerate(node_candidates, start=2):
-        cell_id = f"n{idx}"
-        node_ids.append(cell_id)
-        create_cell(
-            root,
-            cell_id,
-            value=label,
-            style=node_style,
-            vertex=1,
-            geom={
-                "x": str(x),
-                "y": str(y),
-                "width": str(width),
-                "height": str(height),
-                "as": "geometry",
-            },
-        )
-        x += width + gap
+    node_ids = {}
+
+    if stages:
+        stage_x = 60
+        stage_y = 180
+        stage_width = 210
+        stage_height = 140
+        for idx, stage in enumerate(stages, start=1):
+            create_cell(
+                root,
+                f"s{idx}",
+                value=stage.get("name", f"Stage {idx}"),
+                style=STAGE_STYLE,
+                vertex=1,
+                geom={
+                    "x": str(stage_x),
+                    "y": str(stage_y),
+                    "width": str(stage_width),
+                    "height": str(stage_height),
+                    "as": "geometry",
+                },
+            )
+            stage_x += stage_width + 30
+        x = 90
+        stage_index = 0
+        for idx, label in enumerate(node_candidates, start=2):
+            cell_id = f"n{idx}"
+            node_ids[label] = cell_id
+            create_cell(
+                root,
+                cell_id,
+                value=label,
+                style=node_style,
+                vertex=1,
+                geom={
+                    "x": str(x),
+                    "y": str(y),
+                    "width": str(width),
+                    "height": str(height),
+                    "as": "geometry",
+                },
+            )
+            x += stage_width + 30
+    else:
+        for idx, label in enumerate(node_candidates, start=2):
+            cell_id = f"n{idx}"
+            node_ids[label] = cell_id
+            create_cell(
+                root,
+                cell_id,
+                value=label,
+                style=node_style,
+                vertex=1,
+                geom={
+                    "x": str(x),
+                    "y": str(y),
+                    "width": str(width),
+                    "height": str(height),
+                    "as": "geometry",
+                },
+            )
+            x += width + gap
 
     edge_index = 1
-    for left, right in zip(node_ids, node_ids[1:]):
+    if not edges:
+        edges = [{"source": left, "target": right, "type": "data_flow"} for left, right in zip(node_candidates, node_candidates[1:])]
+
+    for edge in edges:
+        left = node_ids.get(edge.get("source"))
+        right = node_ids.get(edge.get("target"))
+        if not left or not right:
+            continue
         create_cell(
             root,
             f"e{edge_index}",
