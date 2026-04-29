@@ -1,0 +1,4 @@
+interface:
+  display_name: "Drawio Visio Workflow"
+  short_description: "draw.io to editable Visio workflow"
+  default_prompt: "Use this skill to inspect a .drawio file, extract structure, rebuild it in Visio, and verify the generated .vsdx output."
