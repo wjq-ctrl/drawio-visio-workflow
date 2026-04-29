@@ -17,6 +17,7 @@ Typical uses:
 - create a fresh flowchart from a text description
 - optimize a rough diagram prompt before drawing
 - retrieve similar reference diagrams before layout
+- generate restrained, top-tier research-style scientific figures
 - convert a draw.io flowchart into Visio
 - restyle a technical diagram for an academic thesis
 - inspect draw.io XML before manual or scripted Visio reconstruction
@@ -90,6 +91,7 @@ Explains the tool order for:
 Provides styling guidance for:
 
 - academic paper figures
+- top-tier research figure aesthetics
 - optimized presentation diagrams
 - original-layout preservation
 

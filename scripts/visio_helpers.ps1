@@ -23,6 +23,7 @@ function Add-Rect {
         [string]$LineRgb = "",
         [string]$LineWeight = "1 pt",
         [string]$FontSize = "10 pt",
+        [string]$FontRgb = "",
         [bool]$Bold = $false,
         [bool]$NoLine = $false,
         [bool]$NoFill = $false,
@@ -43,6 +44,7 @@ function Add-Rect {
     Set-CellFormula $shape "LineWeight" $LineWeight
     Set-CellFormula $shape "Rounding" "0"
     Set-CellFormula $shape "Char.Size" $FontSize
+    if ($FontRgb) { Set-CellFormula $shape "Char.Color" "RGB($FontRgb)" }
     Set-CellFormula $shape "Para.HorzAlign" $Align.ToString()
     Set-CellFormula $shape "VerticalAlign" "1"
     if ($Bold) { Set-CellFormula $shape "Char.Style" "1" }
@@ -56,11 +58,12 @@ function Add-TextBox {
         [double]$Scale, [double]$XOffset, [double]$PageHeight, [double]$TopMargin,
         [string]$Text,
         [string]$FontSize = "10 pt",
+        [string]$FontRgb = "",
         [bool]$Bold = $false,
         [int]$Align = 0
     )
 
-    return Add-Rect -Page $Page -X $X -Y $Y -Width $Width -Height $Height -Scale $Scale -XOffset $XOffset -PageHeight $PageHeight -TopMargin $TopMargin -Text $Text -NoFill $true -NoLine $true -FontSize $FontSize -Bold:$Bold -Align $Align
+    return Add-Rect -Page $Page -X $X -Y $Y -Width $Width -Height $Height -Scale $Scale -XOffset $XOffset -PageHeight $PageHeight -TopMargin $TopMargin -Text $Text -NoFill $true -NoLine $true -FontSize $FontSize -FontRgb $FontRgb -Bold:$Bold -Align $Align
 }
 
 function Add-Arrow {

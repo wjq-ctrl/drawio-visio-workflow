@@ -23,15 +23,39 @@ Use this for thesis, paper, and formal report figures.
 - Use color as a semantic aid, not as the main source of visual interest
 - Use orthogonal data-flow arrows by default unless the content truly requires another path
 
+## Top-Tier Research Aesthetic
+
+Use this level when the target is close to top journal or top conference figure quality.
+
+- Prefer low-saturation cool palettes over obvious blue-orange contrast.
+- Keep the canvas visually quiet. Most of the figure should read as white or near-white.
+- Separate stage labels from stage containers. Do not center large titles inside background boxes.
+- Use stage containers as structural grouping only, with very light fills and restrained borders.
+- Let semantic emphasis come from ordering, alignment, and whitespace before color.
+- Avoid visually heavy capsules, badges, shadows, gradients, and icon decoration.
+- Use one dominant semantic accent, one supporting neutral, and one output neutral at most.
+- Keep node sizes consistent inside the same semantic level.
+- Use slightly darker text than borders so labels stay crisp in PDF and print.
+- Design for grayscale survivability: if printed without color, the grouping should still be legible.
+
 Recommended palette:
 
 - canvas: `#FFFFFF`
-- stage background: `#FBFCFD`
-- stage border: `#C7CDD8`
-- network block: `#EAF2FB`, border `#6E8FB3`
-- process block: `#F1F5F9`, border `#7D8FA3`
-- output block: `#F6F7F9`, border `#9AA4B2`
-- arrows: `#6B7280`
+- stage background: `#F7F8FA`
+- stage border: `#D6DAE1`
+- stage title text: `#344256`
+- network block: `#E9F0FB`, border `#5E7BA6`, text `#21324D`
+- process block: `#EEF2F6`, border `#72849A`, text `#233548`
+- output block: `#F3F4F6`, border `#8D98A8`, text `#2D3642`
+- arrows: `#5F6B7A`
+
+Layout guidance:
+
+- stage outer padding: 24 to 32 px
+- node-to-node gap inside a row: 56 to 80 px
+- stage-to-stage gap: 24 to 40 px
+- keep stage titles aligned on a shared baseline
+- avoid more than 3 semantic fill colors in one figure
 
 ### Data-Flow Arrow Rules
 

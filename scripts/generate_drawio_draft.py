@@ -5,8 +5,8 @@ from pathlib import Path
 
 
 ACADEMIC_NODE_STYLE = (
-    "rounded=0;whiteSpace=wrap;html=1;fillColor=#EAF2FB;"
-    "strokeColor=#6E8FB3;strokeWidth=1.2;fontSize=10;fontFamily=Microsoft YaHei;"
+    "rounded=0;whiteSpace=wrap;html=1;fillColor=#E9F0FB;"
+    "strokeColor=#5E7BA6;strokeWidth=1.1;fontSize=10;fontFamily=Microsoft YaHei;fontColor=#21324D;"
 )
 OPTIMIZED_NODE_STYLE = (
     "rounded=1;whiteSpace=wrap;html=1;fillColor=#DCEEFE;"
@@ -14,11 +14,15 @@ OPTIMIZED_NODE_STYLE = (
 )
 EDGE_STYLE = (
     "edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;"
-    "html=1;strokeWidth=1.6;strokeColor=#6B7280;endArrow=block;endFill=1;"
+    "html=1;strokeWidth=1.5;strokeColor=#5F6B7A;endArrow=block;endFill=1;"
 )
 STAGE_STYLE = (
-    "rounded=0;whiteSpace=wrap;html=1;fillColor=#FBFCFD;"
-    "strokeColor=#C7CDD8;strokeWidth=1;"
+    "rounded=0;whiteSpace=wrap;html=1;fillColor=#F7F8FA;"
+    "strokeColor=#D6DAE1;strokeWidth=1;"
+)
+STAGE_TITLE_STYLE = (
+    "text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;"
+    "whiteSpace=wrap;rounded=0;fontSize=11;fontStyle=1;fontColor=#344256;fontFamily=Microsoft YaHei;"
 )
 
 
@@ -106,7 +110,7 @@ def build_drawio(brief):
             create_cell(
                 root,
                 f"s{idx}",
-                value=stage.get("name", f"Stage {idx}"),
+                value="",
                 style=STAGE_STYLE,
                 vertex=1,
                 geom={
@@ -114,6 +118,20 @@ def build_drawio(brief):
                     "y": str(stage_y),
                     "width": str(stage_width),
                     "height": str(stage_height),
+                    "as": "geometry",
+                },
+            )
+            create_cell(
+                root,
+                f"st{idx}",
+                value=stage.get("name", f"Stage {idx}"),
+                style=STAGE_TITLE_STYLE,
+                vertex=1,
+                geom={
+                    "x": str(stage_x + 12),
+                    "y": str(stage_y + 8),
+                    "width": str(stage_width - 24),
+                    "height": "20",
                     "as": "geometry",
                 },
             )

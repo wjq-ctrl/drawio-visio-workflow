@@ -3,8 +3,15 @@ import sys
 from pathlib import Path
 
 
-ACADEMIC_FILL = "234,242,251"
-ACADEMIC_LINE = "110,143,179"
+ACADEMIC_FILL = "233,240,251"
+ACADEMIC_LINE = "94,123,166"
+ACADEMIC_TEXT = "33,50,77"
+PROCESS_FILL = "238,242,246"
+PROCESS_LINE = "114,132,154"
+PROCESS_TEXT = "35,53,72"
+STAGE_FILL = "247,248,250"
+STAGE_LINE = "214,218,225"
+STAGE_TEXT = "52,66,86"
 OPTIMIZED_FILL = "220,238,254"
 OPTIMIZED_LINE = "37,99,235"
 ARROW_LINE = "107,114,128"
@@ -25,8 +32,8 @@ def ps_string(value: str) -> str:
 
 def pick_colors(style_name: str):
     if style_name == "academic":
-        return ACADEMIC_FILL, ACADEMIC_LINE
-    return OPTIMIZED_FILL, OPTIMIZED_LINE
+        return ACADEMIC_FILL, ACADEMIC_LINE, ACADEMIC_TEXT
+    return OPTIMIZED_FILL, OPTIMIZED_LINE, "33,33,33"
 
 
 def build_script(brief, output_path: str):
@@ -34,7 +41,7 @@ def build_script(brief, output_path: str):
     stages = brief.get("stages") or []
     edges = brief.get("edges") or []
     style_name = brief.get("preferred_style", "optimized")
-    fill_rgb, line_rgb = pick_colors(style_name)
+    fill_rgb, line_rgb, text_rgb = pick_colors(style_name)
 
     lines = []
     lines.append("param(")
@@ -77,8 +84,13 @@ def build_script(brief, output_path: str):
             lines.append(
                 f"$stage{idx} = Add-Rect -Page $page -X {stage_x} -Y {stage_y} -Width {stage_width} -Height {stage_height} "
                 f"-Scale $Scale -XOffset $XOffset -PageHeight $PageHeight -TopMargin $TopMargin "
-                f"-Text '{ps_string(stage.get('name', f'Stage {idx}'))}' -FillRgb '251,252,253' -LineRgb '199,205,216' "
+                f"-Text '' -FillRgb '{STAGE_FILL}' -LineRgb '{STAGE_LINE}' "
                 f"-LineWeight '1 pt' -FontSize '9 pt'"
+            )
+            lines.append(
+                f"$stageTitle{idx} = Add-TextBox -Page $page -X {stage_x + 12} -Y {stage_y + 8} -Width {stage_width - 24} -Height 18 "
+                f"-Scale $Scale -XOffset $XOffset -PageHeight $PageHeight -TopMargin $TopMargin "
+                f"-Text '{ps_string(stage.get('name', f'Stage {idx}'))}' -FontSize '9 pt' -FontRgb '{STAGE_TEXT}' -Bold:$true -Align 0"
             )
             stage_x += stage_width + 30
 
@@ -91,7 +103,7 @@ def build_script(brief, output_path: str):
             f"{var_name} = Add-Rect -Page $page -X {x} -Y {y} -Width {width} -Height {height} "
             f"-Scale $Scale -XOffset $XOffset -PageHeight $PageHeight -TopMargin $TopMargin "
             f"-Text '{ps_string(label)}' -FillRgb '{fill_rgb}' -LineRgb '{line_rgb}' "
-            f"-LineWeight '1.1 pt' -FontSize '9 pt'"
+            f"-LineWeight '1.1 pt' -FontSize '9 pt' -FontRgb '{text_rgb}'"
         )
         x += 240 if stages else width + gap
 
