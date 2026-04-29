@@ -23,6 +23,20 @@ Typical uses:
 - inspect draw.io XML before manual or scripted Visio reconstruction
 - automate repeated drawio-to-visio conversion work
 
+## Demo
+
+### Transformer architecture
+
+The repository includes a demo transformer architecture figure generated as a pair of editable diagram artifacts plus a preview image:
+
+- [`transformer-architecture.drawio`](examples/transformer-demo/transformer-architecture.drawio)
+- [`transformer-architecture.vsdx`](examples/transformer-demo/transformer-architecture.vsdx)
+- [`create_transformer_architecture.ps1`](examples/transformer-demo/create_transformer_architecture.ps1)
+
+Preview:
+
+![Transformer architecture demo](examples/transformer-demo/transformer-architecture.svg)
+
 ## Repository structure
 
 ```text
@@ -30,6 +44,12 @@ drawio-visio-workflow/
 ├─ SKILL.md
 ├─ agents/
 │  └─ openai.yaml
+├─ examples/
+│  └─ transformer-demo/
+│     ├─ create_transformer_architecture.ps1
+│     ├─ transformer-architecture.drawio
+│     ├─ transformer-architecture.svg
+│     └─ transformer-architecture.vsdx
 ├─ references/
 │  ├─ input-refinement.md
 │  ├─ mcp-tools.md
