@@ -42,6 +42,7 @@ and the output needs to include both:
 Prefer this tool order:
 
 1. input refinement plus image search
+   - `scripts/run_diagram_preflight.py`
    - `scripts/optimize_diagram_prompt.py`
    - `scripts/generate_drawio_draft.py`
    - `scripts/generate_visio_script_from_brief.py`
@@ -70,6 +71,7 @@ Use web image retrieval before the first real layout pass when the input begins 
 - Then derive 3 to 6 image-search queries for similar figures.
 - Then generate a first-pass `.drawio` draft when the input is still only descriptive.
 - Then generate a first-pass Visio PowerShell script when the diagram is regular enough to automate.
+- For local automation, prefer `scripts/run_diagram_preflight.py` to produce all three artifacts in one pass.
 - Review similar diagrams to decide:
   - left-to-right vs top-to-bottom flow
   - density level
@@ -99,6 +101,7 @@ Use draw.io as the primary authoring surface. Use Visio as the delivery reconstr
 - Read [references/style-guidelines.md](references/style-guidelines.md) when the user asks for academic, presentation, or neutral visual treatment.
 - Read [references/mcp-tools.md](references/mcp-tools.md) for the exact MCP responsibilities and tool ordering.
 - Use [scripts/optimize_diagram_prompt.py](scripts/optimize_diagram_prompt.py) to turn rough input into a structured brief and search-query set.
+- Use [scripts/run_diagram_preflight.py](scripts/run_diagram_preflight.py) when you want a one-command local preflight that writes the brief, draft `.drawio`, and first-pass Visio script together.
 - Use [scripts/generate_drawio_draft.py](scripts/generate_drawio_draft.py) to create a first draft `.drawio` from the structured brief.
 - Use [scripts/generate_visio_script_from_brief.py](scripts/generate_visio_script_from_brief.py) to create a first-pass Visio reconstruction script from the same brief.
 - Use [scripts/extract_drawio_cells.py](scripts/extract_drawio_cells.py) to inspect the `.drawio` structure.

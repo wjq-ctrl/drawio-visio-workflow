@@ -4,6 +4,7 @@
 
 When the task begins from description instead of from an existing diagram:
 
+- optionally run `python scripts/run_diagram_preflight.py "<raw input>" --outdir preflight_output --basename diagram`
 - run `python scripts/optimize_diagram_prompt.py "<raw input>"`
 - read the structured brief
 - derive similar-image search queries

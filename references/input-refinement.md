@@ -9,6 +9,22 @@ Turn rough input into:
 - a cleaner diagram brief
 - a first-pass node and edge structure
 - search queries for similar reference diagrams
+- a draft `.drawio`
+- a first-pass Visio reconstruction script
+
+## One-command local path
+
+If you want all local preflight artifacts at once, run:
+
+```bash
+python scripts/run_diagram_preflight.py "your raw diagram description" --outdir preflight_output --basename diagram
+```
+
+This writes:
+
+- `diagram_brief.json`
+- `diagram_draft.drawio`
+- `diagram_create_visio.ps1`
 
 ## Step 1. Tighten the prompt
 
